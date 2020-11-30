@@ -389,7 +389,10 @@ void    iface_saveOutletResults(DateTime reportDate, FILE* file);
 //   Hot Start File Methods
 //-----------------------------------------------------------------------------
 int     hotstart_open(void);
-void    hotstart_close(void);
+void    hotstart_close(TFile hsfile);
+int  	openHotstartFile2(TFile hsfile);
+int 	saveRunoff(TFile hsfile);
+int 	saveRouting(TFile hsfile);
 
 //-----------------------------------------------------------------------------
 //   Conveyance System Link Methods
