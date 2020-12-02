@@ -567,6 +567,13 @@ int DLLEXPORT swmm_setGagePrecip(int index, double total_precip);
  @param array The pointer to the array
  @return Void.
 */
+
+/**
+ @brief Save hotstart file during simulation
+ @param hsfile The file name of the hotstart file that user would like to save
+*/
+int DLLEXPORT swmm_saveHotstart(char *hsfile);
+
 void DLLEXPORT swmm_freeMemory(void *memory);
 
 #ifdef __cplusplus

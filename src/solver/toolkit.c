@@ -32,7 +32,7 @@ int  stats_getOutfallStat(int index, TOutfallStats **outfallStats);
 int  stats_getLinkStat(int index, TLinkStats **linkStats);
 int  stats_getPumpStat(int index, TPumpStats **pumpStats);
 int  stats_getSubcatchStat(int index, TSubcatchStats **subcatchStats);
-
+int open_hotstart(TFile hsfile);
 
 // Utilty Function Declarations
 double* newDoubleArray(int n);
@@ -2839,38 +2839,37 @@ int DLLEXPORT swmm_setGagePrecip(int index, double total_precip)
 
 int DLLEXPORT swmm_saveHotstart(char *hsfile)
 //
-// Input:   hsfile = path of filename to save hotstart data to (e.g., 'myhotstart.hsf')
-// Output:  None
-// Purpose: save a hotstart file at any point in simulation
+// Input:   hsfile = path of filename to save hotstart data to (e.g.,
+// 'myhotstart.hsf') Output:  None Purpose: save a hotstart file at any point in
+// simulation
 {
-	  int error_code_index = 0;
+    int error_code_index = 0;
     // Check if Open
-    if(swmm_IsOpenFlag() == FALSE)
-    {
+    if (swmm_IsOpenFlag() == FALSE) {
         error_code_index = ERR_API_INPUTNOTOPEN;
     }
     // Check if Simulation is Running
-    else if (swmm_IsStartedFlag() == FALSE)
-    {
-      error_code_index = ERR_API_SIM_NRUNNING;
-    }
-    else
-    {
+    else if (swmm_IsStartedFlag() == FALSE) {
+        error_code_index = ERR_API_SIM_NRUNNING;
+    } else {
         // make a new instance of a TFile struct, Fhotstart_custom
         TFile Fhotstart_custom;
-        // set the 'mode' attribute of new TFile struct to 'SAVE_FILE' as done in normal run in
+        // set the 'mode' attribute of new TFile struct to 'SAVE_FILE' as done
+        // in normal run in
         // ... iface.c
         Fhotstart_custom.mode = SAVE_FILE;
-        // set the 'name' attribute of Fhotstart_custom to char array passed as function parameter
+        // set the 'name' attribute of Fhotstart_custom to char array passed as
+        // function parameter
         sstrncpy(Fhotstart_custom.name, hsfile, MAXFNAME);
-        // call openHotstartFile2 from hotstart.c to open custom hotstart file for writing
+        // call openHotstartFile2 from hotstart.c to open custom hotstart file
+        // for writing
         openHotstartFile2(Fhotstart_custom);
         // check to make sure there is the file
-        if (Fhotstart_custom.file)
-        {
+        if (Fhotstart_custom.file) {
             // write the runoff states to the hotstart file
             saveRunoff(Fhotstart_custom);
-            // write the routing states to the hotstart file (file is closed in saveRouting)
+            // write the routing states to the hotstart file (file is closed in
+            // saveRouting)
             saveRouting(Fhotstart_custom);
         }
     }
